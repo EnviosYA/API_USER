@@ -16,8 +16,4 @@
     <ProjectReference Include="..\PS.Template.Domain\PS.Template.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="cualquiera\" />
-  </ItemGroup>
-
 </Project>
