@@ -8,6 +8,6 @@ namespace PS.Template.Domain.Interfaces.Service
 {
     public interface IUsuarioServices : IBaseService<Usuario>
     {
-
+        List<ResponseGetAllUsuarios> GetUsuarios(int id,string dni);
     }
 }

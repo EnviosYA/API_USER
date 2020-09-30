@@ -25,13 +25,29 @@ namespace PS.Template.API.Controllers
         [HttpPost]
         public ActionResult<Usuario> Post(UsuarioDto usuario)
         {
-          return _services.Add(Conversion.converDTO(usuario));
+
+            try
+            {
+                return new JsonResult(_services.Add(Conversion.converDTO(usuario))) { StatusCode = 201 };
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+
         }
 
         [HttpGet]
-        public ActionResult<bool> Get(UsuarioDto usuario)
+        public ActionResult<bool> Get([FromQuery] int id,[FromQuery] string dni)
         {
-            return Ok();
+            try
+            {
+                return new JsonResult(_services.GetUsuarios(id,dni));
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
     }

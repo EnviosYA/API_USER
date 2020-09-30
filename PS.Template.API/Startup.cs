@@ -22,6 +22,11 @@ using PS.Template.AccessData.cualquiera;
 using PS.Template.Domain.Interfaces.Service;
 using PS.Template.Domain.Interfaces.Repositories;
 using PS.Template.AccessData.Repositories;
+using PS.Template.AccessData.Query;
+using PS.Template.Domain.Query;
+using SqlKata.Compilers;
+using System.Data;
+using System.Data.SqlClient;
 
 namespace PS.Template.API
 {
@@ -42,10 +47,18 @@ namespace PS.Template.API
 
             var connectionString = Configuration.GetSection("ConnectionString").Value;
 
-
             services.AddDbContext<UsuarioDBContext>(opcion => opcion.UseSqlServer(connectionString));
+
+            services.AddTransient<Compiler, SqlServerCompiler>();
+            services.AddTransient<IDbConnection>(b =>
+            {
+                return new SqlConnection(connectionString);
+            });
+
+
             services.AddTransient<IUsuarioServices, UsuarioServices>();
             services.AddTransient<IUsuarioRepository, UsuarioRepository>();
+            services.AddTransient<IUsuarioQuery, UsuarioQuery>();
 
             services.AddSwaggerGen(c =>
             {

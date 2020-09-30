@@ -4,6 +4,8 @@ using PS.Template.Domain.Commands;
 using PS.Template.Domain.DTO;
 using PS.Template.Domain.Interfaces.Repositories;
 using PS.Template.Domain.Interfaces.Service;
+using PS.Template.Domain.Query;
+using System.Collections.Generic;
 
 namespace PS.Template.Application.Services
 {
@@ -13,28 +15,17 @@ namespace PS.Template.Application.Services
     {
 
         private readonly IUsuarioRepository _repository;
+        private readonly IUsuarioQuery _query;
 
-        public UsuarioServices(IUsuarioRepository repository) : base(repository)
+        public UsuarioServices(IUsuarioRepository repository,IUsuarioQuery query) : base(repository)
         {
             _repository = repository;
+            _query = query;
         }
 
-        //public Usuario AddDTO(UsuarioDto entity)
-        //{
-        //    var usuario = new Usuario
-        //    {
-        //        Nombre = entity.Nombre,
-        //        Apellido = entity.Apellido,
-        //        Dni = entity.Dni,
-        //        FechaNac = entity.FechaNac,
-        //        IdDireccion = 1,
-        //        IdCuenta = 1
-        //    };
-
-        //    _repository.Add(usuario);
-
-        //    return usuario;
-        //}
-
+        public List<ResponseGetAllUsuarios> GetUsuarios(int id,string dni)
+        {
+            return _query.GetAllUsuarios(id,dni);
+        }
     }
 }
