@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace PS.Template.AccessData.cualquiera
+namespace PS.Template.Domain
 {
     public partial class Usuario
     {

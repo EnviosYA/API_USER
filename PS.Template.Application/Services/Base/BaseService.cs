@@ -15,10 +15,6 @@ namespace PS.Template.Application.Services.Base
             Repository = repository;
         }
 
-        public virtual void Add(E entity)
-        {
-            Repository.Add(entity);
-        }
 
         public virtual void Delete(E entity)
         {
@@ -36,6 +32,11 @@ namespace PS.Template.Application.Services.Base
         public virtual void Edit(E entity)
         {
             Repository.Edit(entity);
+        }
+
+        public E Add(E entity)
+        {
+            return Repository.Add(entity);
         }
     }
 }

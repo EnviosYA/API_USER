@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using PS.Template.Domain;
 
 namespace PS.Template.AccessData.cualquiera
 {
@@ -21,7 +22,6 @@ namespace PS.Template.AccessData.cualquiera
         {
             if (!optionsBuilder.IsConfigured)
             {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
                 optionsBuilder.UseSqlServer("Data Source= DESKTOP-E96Q542; Initial Catalog= UsuarioDB; user=sa; password=rosario1803; Integrated Security= true;");
             }
         }
@@ -30,12 +30,13 @@ namespace PS.Template.AccessData.cualquiera
         {
             modelBuilder.Entity<Usuario>(entity =>
             {
+
                 entity.HasKey(e => e.IdUsuario)
-                    .HasName("PK__Usuario__645723A6EF59050A");
+                    .HasName("PK__Usuario__645723A605ACEEA6");
+
 
                 entity.Property(e => e.IdUsuario)
-                    .HasColumnName("idUsuario")
-                    .ValueGeneratedNever();
+                    .HasColumnName("idUsuario");
 
                 entity.Property(e => e.Apellido)
                     .IsRequired()
