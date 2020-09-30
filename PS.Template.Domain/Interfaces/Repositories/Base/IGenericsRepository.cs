@@ -6,7 +6,7 @@ namespace PS.Template.Domain.Commands
 {
     public interface IGenericsRepository<E> where E : class
     {
-        void Add(E entity);
+        E Add(E entity);
         void Delete(E entity);
         void Delete(int id);
         void Edit(E entity);

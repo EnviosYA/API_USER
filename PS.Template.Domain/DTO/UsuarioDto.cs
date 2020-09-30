@@ -4,11 +4,14 @@ using System.Text;
 
 namespace PS.Template.Domain.DTO
 {
-    public class AlumnoDto
+    public class UsuarioDto
     {
         public string Nombre { get; set; }
         public string Apellido { get; set; }
-        public int Legajo { get; set; }
-        public string CursoId { get; set; }
+        public string Dni { get; set; }
+        public string FechaNac { get; set; }
+        public int IdDireccion { get; set; }
+        public int IdCuenta { get; set; }
+
     }
 }

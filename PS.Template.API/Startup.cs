@@ -18,6 +18,10 @@ using PS.Template.Application.Services;
 using PS.Template.AccessData.Commands;
 using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Http;
+using PS.Template.AccessData.cualquiera;
+using PS.Template.Domain.Interfaces.Service;
+using PS.Template.Domain.Interfaces.Repositories;
+using PS.Template.AccessData.Repositories;
 
 namespace PS.Template.API
 {
@@ -39,10 +43,9 @@ namespace PS.Template.API
             var connectionString = Configuration.GetSection("ConnectionString").Value;
 
 
-            services.AddDbContext<BaseDbContext>(opcion => opcion.UseSqlServer(connectionString));
-
-            services.AddTransient<IAlumnoRepository, AlumnoRepository>();
-            services.AddTransient<IAlumnoService, AlumnoService>();
+            services.AddDbContext<UsuarioDBContext>(opcion => opcion.UseSqlServer(connectionString));
+            services.AddTransient<IUsuarioServices, UsuarioServices>();
+            services.AddTransient<IUsuarioRepository, UsuarioRepository>();
 
             services.AddSwaggerGen(c =>
             {
