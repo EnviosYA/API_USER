@@ -28,7 +28,9 @@ namespace PS.Template.API.Controllers
 
             try
             {
-                return new JsonResult(_services.Add(Conversion.converDTO(usuario))) { StatusCode = 201 };
+                var user = _services.Add(Conversion.converDTO(usuario));
+
+                return new JsonResult(new ResponseGetGenery { id = user.IdUsuario , Tipo = "Usuario Creado" }) { StatusCode = 201 };
             }
             catch (Exception e)
             {
@@ -50,5 +52,19 @@ namespace PS.Template.API.Controllers
             }
         }
 
+        [HttpPut]
+        public ActionResult<Usuario> Put(int id, UsuarioDto usuario)
+        {
+            try
+            {
+                var user = _services.UpDateUsuario(id, usuario);
+
+                return new JsonResult(new ResponseGetGenery { id = user.IdUsuario, Tipo = "Usuario Modificado" }) { StatusCode = 204 };
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
     }
 }

@@ -27,5 +27,10 @@ namespace PS.Template.Application.Services
         {
             return _query.GetAllUsuarios(id,dni);
         }
+
+        public Usuario UpDateUsuario(int id, UsuarioDto user)
+        {
+            return _query.EditarUsuario(id, user);
+        }
     }
 }
