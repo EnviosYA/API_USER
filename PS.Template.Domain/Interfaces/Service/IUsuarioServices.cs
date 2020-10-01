@@ -1,8 +1,6 @@
 ﻿using PS.Template.Domain.DTO;
 using PS.Template.Domain.Service.Base;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace PS.Template.Domain.Interfaces.Service
 {
@@ -10,5 +8,7 @@ namespace PS.Template.Domain.Interfaces.Service
     {
         List<ResponseGetAllUsuarios> GetUsuarios(int id,string dni);
         Usuario UpDateUsuario(int id, UsuarioDto user);
+
+        int DeletearUsuario(int id);
     }
 }

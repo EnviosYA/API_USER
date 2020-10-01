@@ -4,11 +4,9 @@ using PS.Template.Domain.DTO;
 using PS.Template.Domain.Query;
 using SqlKata.Compilers;
 using SqlKata.Execution;
-using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Text;
 
 namespace PS.Template.AccessData.Query
 {
@@ -54,6 +52,15 @@ namespace PS.Template.AccessData.Query
                             FechaNac = fec,
                         });
             return Conversion.converDTO(user);
+        }
+
+        public int EliminarUsuario(int id)
+        {
+            var db = new QueryFactory(connection, sqlKataCompiler);
+            var afectado = db.Query("Usuario")
+                             .Where("idUsuario", id)
+                             .Delete();
+            return afectado;
         }
     }      
 }

@@ -1,6 +1,5 @@
 ﻿using PS.Template.Application.Services.Base;
 using PS.Template.Domain;
-using PS.Template.Domain.Commands;
 using PS.Template.Domain.DTO;
 using PS.Template.Domain.Interfaces.Repositories;
 using PS.Template.Domain.Interfaces.Service;
@@ -21,6 +20,11 @@ namespace PS.Template.Application.Services
         {
             _repository = repository;
             _query = query;
+        }
+
+        public int DeletearUsuario(int id)
+        {
+            return _query.EliminarUsuario(id);
         }
 
         public List<ResponseGetAllUsuarios> GetUsuarios(int id,string dni)

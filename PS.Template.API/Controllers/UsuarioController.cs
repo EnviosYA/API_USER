@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PS.Template.Application.Services;
 using PS.Template.Domain;
@@ -30,7 +26,7 @@ namespace PS.Template.API.Controllers
             {
                 var user = _services.Add(Conversion.converDTO(usuario));
 
-                return new JsonResult(new ResponseGetGenery { id = user.IdUsuario , Tipo = "Usuario Creado" }) { StatusCode = 201 };
+                return new JsonResult(new ResponseGetGenery { id = user.IdUsuario, Tipo = "Usuario Creado" }) { StatusCode = 201 };
             }
             catch (Exception e)
             {
@@ -40,11 +36,11 @@ namespace PS.Template.API.Controllers
         }
 
         [HttpGet]
-        public ActionResult<bool> Get([FromQuery] int id,[FromQuery] string dni)
+        public ActionResult<bool> Get([FromQuery] int id, [FromQuery] string dni)
         {
             try
             {
-                return new JsonResult(_services.GetUsuarios(id,dni));
+                return new JsonResult(_services.GetUsuarios(id, dni));
             }
             catch (Exception e)
             {
@@ -60,6 +56,21 @@ namespace PS.Template.API.Controllers
                 var user = _services.UpDateUsuario(id, usuario);
 
                 return new JsonResult(new ResponseGetGenery { id = user.IdUsuario, Tipo = "Usuario Modificado" }) { StatusCode = 204 };
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        [HttpDelete] 
+        public ActionResult<Usuario> Delete(int id)
+        {
+            try
+            {
+                var idAfec = _services.DeletearUsuario(id);
+
+                return new JsonResult(new ResponseGetGenery { id = idAfec, Tipo = "Usuario Borrado" }) { StatusCode = 200 };
             }
             catch (Exception e)
             {
