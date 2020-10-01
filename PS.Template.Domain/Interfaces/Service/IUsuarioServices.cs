@@ -8,5 +8,7 @@ namespace PS.Template.Domain.Interfaces.Service
     {
         List<ResponseGetAllUsuarios> GetUsuarios(int id,string dni);
         Usuario UpDateUsuario(int id, UsuarioDto user);
+
+        int DeletearUsuario(int id);
     }
 }

@@ -22,6 +22,11 @@ namespace PS.Template.Application.Services
             _query = query;
         }
 
+        public int DeletearUsuario(int id)
+        {
+            return _query.EliminarUsuario(id);
+        }
+
         public List<ResponseGetAllUsuarios> GetUsuarios(int id,string dni)
         {
             return _query.GetAllUsuarios(id,dni);

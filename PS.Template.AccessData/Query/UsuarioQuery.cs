@@ -53,5 +53,14 @@ namespace PS.Template.AccessData.Query
                         });
             return Conversion.converDTO(user);
         }
+
+        public int EliminarUsuario(int id)
+        {
+            var db = new QueryFactory(connection, sqlKataCompiler);
+            var afectado = db.Query("Usuario")
+                             .Where("idUsuario", id)
+                             .Delete();
+            return afectado;
+        }
     }      
 }
