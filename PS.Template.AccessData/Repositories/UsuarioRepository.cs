@@ -2,9 +2,6 @@
 using PS.Template.AccessData.cualquiera;
 using PS.Template.Domain;
 using PS.Template.Domain.Interfaces.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace PS.Template.AccessData.Repositories
 {
