@@ -17,8 +17,8 @@ namespace PS.Template.Application.Services
                 Apellido = entity.Apellido,
                 Dni = entity.Dni,
                 FechaNac = entity.FechaNac,
-                IdDireccion = 1,
-                IdCuenta = 1
+                IdDireccion = entity.IdDireccion,
+                IdCuenta = entity.IdCuenta,
             };
 
             return usuario;

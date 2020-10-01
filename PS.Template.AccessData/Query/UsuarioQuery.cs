@@ -1,4 +1,6 @@
-﻿using PS.Template.Domain.DTO;
+﻿using PS.Template.Application.Services;
+using PS.Template.Domain;
+using PS.Template.Domain.DTO;
 using PS.Template.Domain.Query;
 using SqlKata.Compilers;
 using SqlKata.Execution;
@@ -34,5 +36,24 @@ namespace PS.Template.AccessData.Query
             return result.ToList();
         }
 
+        public Usuario EditarUsuario(int id, UsuarioDto user)
+        {
+            var nomb = user.Nombre;
+            var ape = user.Apellido;
+            var dni = user.Dni;
+            var fec = user.FechaNac;
+
+            var db = new QueryFactory(connection, sqlKataCompiler);
+                db.Query("Usuario")
+                        .Where("idUsuario", id)
+                        .Update(new 
+                        {
+                            Nombre = nomb,
+                            Apellido = ape,
+                            Dni = dni,
+                            FechaNac = fec,
+                        });
+            return Conversion.converDTO(user);
+        }
     }      
 }
