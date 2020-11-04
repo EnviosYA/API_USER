@@ -8,6 +8,5 @@
         public string FechaNac { get; set; }
         public int IdDireccion { get; set; }
         public int IdCuenta { get; set; }
-
     }
 }
