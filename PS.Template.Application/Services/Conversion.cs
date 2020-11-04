@@ -1,23 +1,23 @@
 ﻿using PS.Template.Domain;
 using PS.Template.Domain.DTO;
+using System.Collections.Generic;
 
 namespace PS.Template.Application.Services
 {
     public class Conversion
     {
-
-        public static Usuario converDTO(UsuarioDto entity)
+        public static Usuario converDTO(RequestPost entity)
         {
+            //IEnumerable<Autenticacion> result = GetDataApi(2);
             var usuario = new Usuario
             {
-                Nombre = entity.Nombre,
-                Apellido = entity.Apellido,
-                Dni = entity.Dni,
-                FechaNac = entity.FechaNac,
-                IdDireccion = entity.IdDireccion,
-                IdCuenta = entity.IdCuenta,
+                Nombre = entity.Usuario.Nombre,
+                Apellido = entity.Usuario.Apellido,
+                Dni = entity.Usuario.Dni,
+                FechaNac = entity.Usuario.FechaNac,
+                //IdDireccion = entity.Direccion.
+                //IdCuenta = entity.IdCuenta,
             };
-
             return usuario;
         }
     }

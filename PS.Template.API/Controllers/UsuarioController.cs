@@ -19,12 +19,12 @@ namespace PS.Template.API.Controllers
         }
 
         [HttpPost]
-        public ActionResult<Usuario> Post(UsuarioDto usuario)
+        public ActionResult<Usuario> Post(RequestPost usuario)
         {
 
             try
             {
-                var user = _services.Add(Conversion.converDTO(usuario));
+                var user = _services.CreateUserAccount(usuario);
 
                 return new JsonResult(new ResponseGetGenery { id = user.IdUsuario, Tipo = "Usuario Creado" }) { StatusCode = 201 };
             }
@@ -49,7 +49,7 @@ namespace PS.Template.API.Controllers
         }
 
         [HttpPut]
-        public ActionResult<Usuario> Put(int id, UsuarioDto usuario)
+        public ActionResult<Usuario> Put(int id, RequestPost usuario)
         {
             try
             {

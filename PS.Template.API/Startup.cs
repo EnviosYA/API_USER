@@ -15,6 +15,8 @@ using PS.Template.Domain.Query;
 using SqlKata.Compilers;
 using System.Data;
 using System.Data.SqlClient;
+using PS.Template.Domain.Interfaces.IGenerateRequest;
+using PS.Template.Application.RequestApis;
 
 namespace PS.Template.API
 {
@@ -35,6 +37,9 @@ namespace PS.Template.API
 
             var connectionString = Configuration.GetSection("ConnectionString").Value;
 
+            //CORS
+            services.AddCors(c => c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()));
+
             services.AddDbContext<UsuarioDBContext>(opcion => opcion.UseSqlServer(connectionString));
 
             services.AddTransient<Compiler, SqlServerCompiler>();
@@ -47,6 +52,9 @@ namespace PS.Template.API
             services.AddTransient<IUsuarioServices, UsuarioServices>();
             services.AddTransient<IUsuarioRepository, UsuarioRepository>();
             services.AddTransient<IUsuarioQuery, UsuarioQuery>();
+
+            services.AddTransient<IGenerateRequest, GenerateRequest>();
+            services.AddHttpContextAccessor();
 
             services.AddSwaggerGen(c =>
             {
@@ -80,6 +88,8 @@ namespace PS.Template.API
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors(options => options.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
 
             app.UseAuthorization();
 
