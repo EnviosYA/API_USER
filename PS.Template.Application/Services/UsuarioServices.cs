@@ -53,22 +53,20 @@ namespace PS.Template.Application.Services
                 IdTipoCuenta = 1,
                 IdUsuario = 0
             };
-           
-            
+
+            IEnumerable<ResultPost> StateDireccion = PostDireccionApi(requestPost.Direccion);
+            foreach (var item in StateDireccion)
+            {
+                if (item.Type == "Direccion")
+                    idDirecion = item.Id;
+            }
 
             IEnumerable<ResultPost> StateCuenta = PostCuentaApi(account);
 
             foreach (var item in StateCuenta)
             {
-                if (item.keyValuePairs.Keys.ToString() == "Cuenta")
-                    idCuenta = item.keyValuePairs.Values.ToString();
-            }
-
-            IEnumerable<ResultPost> StateDireccion = PostDireccionApi(requestPost.Direccion);
-            foreach (var item in StateDireccion)
-            {
-                if (item.keyValuePairs.Keys.ToString() == "Direccion")
-                    idDirecion = item.keyValuePairs.Values.ToString();
+                if (item.Type == "Cuenta")
+                    idCuenta = item.Id;
             }
 
             Usuario user = new Usuario()
@@ -93,12 +91,12 @@ namespace PS.Template.Application.Services
             return user;
         }
 
-        public IEnumerable<ResultPost> PostDireccionApi(DireccionDTO direccionDTO)
+        public List<ResultPost> PostDireccionApi(DireccionDTO direccionDTO)
         {
             string uri = _request.GetUri(1);
             RestRequest request = new RestRequest(Method.POST);
             request.AddJsonBody(direccionDTO);
-            IEnumerable<ResultPost> user = _request.ConsultarApiRest<ResultPost>(uri, request);
+            List<ResultPost> user = _request.ConsultarApiRest<ResultPost>(uri, request);
             return user;
         }
     }

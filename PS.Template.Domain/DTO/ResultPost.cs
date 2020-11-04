@@ -6,6 +6,7 @@ namespace PS.Template.Domain.DTO
 {
     public class ResultPost
     {
-        public Dictionary<string, string> keyValuePairs { get; set; }
+        public string Id { get; set; }
+        public string Type { get; set; }
     }
 }

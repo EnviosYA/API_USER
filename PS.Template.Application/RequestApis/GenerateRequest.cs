@@ -5,6 +5,7 @@ using PS.Template.Domain.Interfaces.IGenerateRequest;
 using RestSharp;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Security.Claims;
 using System.Text;
@@ -40,12 +41,13 @@ namespace PS.Template.Application.RequestApis
             }
             return uri;
         }
-        public IEnumerable<T> ConsultarApiRest<T>(string uri, RestRequest request)
+        public List<T> ConsultarApiRest<T>(string uri, RestRequest request)
         {
             IRestClient client;
             IRestResponse queryResult;
-            IEnumerable<T> hash = null;
-            var headers = new Dictionary<string, string>
+            List<T> hash = new List<T>();
+            T instancia;
+            var headers = new Dictionary<string, string>()
             {
                 { "Content-Type", "application/json" },
                 { "Accept", "application/json" }
@@ -57,14 +59,22 @@ namespace PS.Template.Application.RequestApis
                 //    Authenticator = new JwtAuthenticator("")
                 //};
                 client = new RestClient(uri);
-                client.AddDefaultHeader("Content-Type", "application/json");
                 request.AddHeaders(headers);
                 request.RequestFormat = DataFormat.Json;
                 queryResult = client.Execute(request);
 
-                if (queryResult.StatusCode == HttpStatusCode.OK || queryResult.StatusCode == HttpStatusCode.Created)
+
+                if (queryResult.ResponseStatus == ResponseStatus.Completed )
                 {
-                    hash = JsonConvert.DeserializeObject<IList<T>>(queryResult.Content);
+                    if (queryResult.Content.Contains("["))
+                    {
+                        hash = JsonConvert.DeserializeObject<List<T>>(queryResult.Content);
+                    }
+                    else
+                    {
+                        instancia = JsonConvert.DeserializeObject<T>(queryResult.Content);
+                        hash.Add(instancia);
+                    }
                 }
             }
             catch (Exception ex)
