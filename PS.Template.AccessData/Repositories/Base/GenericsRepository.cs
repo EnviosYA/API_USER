@@ -35,6 +35,7 @@ namespace PS.Template.AccessData.Commands
         {
             E entity = FindById(id);
             Delete(entity);
+            _context.SaveChanges();
         }
         public virtual void DeleteRange(IEnumerable<E> entity)
         {

@@ -36,10 +36,10 @@ namespace PS.Template.AccessData.Query
 
         public Usuario EditarUsuario(int id, RequestPost user)
         {
-            var nomb = user.Usuario.Nombre;
-            var ape = user.Usuario.Apellido;
-            var dni = user.Usuario.Dni;
-            var fec = user.Usuario.FechaNac;
+            var nomb = user.Nombre;
+            var ape = user.Apellido;
+            var dni = user.Dni;
+            var fec = user.FechaNac;
 
             var db = new QueryFactory(connection, sqlKataCompiler);
                 db.Query("Usuario")

@@ -25,14 +25,19 @@ namespace PS.Template.API.Controllers
             try
             {
                 var user = _services.CreateUserAccount(usuario);
-
-                return new JsonResult(new ResponseGetGenery { id = user.IdUsuario, Tipo = "Usuario Creado" }) { StatusCode = 201 };
+                if (user != null)
+                {
+                    return new JsonResult(new ResponseGetGenery { id = user.IdUsuario, Tipo = "Usuario Creado" }) { StatusCode = 201 };
+                }
+                else
+                {
+                    return new JsonResult(new ResponseGetGenery { id = 0 , Tipo = null}) { StatusCode = 400};
+                }
             }
             catch (Exception e)
             {
                 return BadRequest(e.Message);
             }
-
         }
 
         [HttpGet]

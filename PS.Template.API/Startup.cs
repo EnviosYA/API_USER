@@ -17,6 +17,7 @@ using System.Data;
 using System.Data.SqlClient;
 using PS.Template.Domain.Interfaces.IGenerateRequest;
 using PS.Template.Application.RequestApis;
+using PS.Template.JWSToken;
 
 namespace PS.Template.API
 {
@@ -37,9 +38,6 @@ namespace PS.Template.API
 
             var connectionString = Configuration.GetSection("ConnectionString").Value;
 
-            //CORS
-            services.AddCors(c => c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()));
-
             services.AddDbContext<UsuarioDBContext>(opcion => opcion.UseSqlServer(connectionString));
 
             services.AddTransient<Compiler, SqlServerCompiler>();
@@ -47,7 +45,6 @@ namespace PS.Template.API
             {
                 return new SqlConnection(connectionString);
             });
-
 
             services.AddTransient<IUsuarioServices, UsuarioServices>();
             services.AddTransient<IUsuarioRepository, UsuarioRepository>();
@@ -65,12 +62,19 @@ namespace PS.Template.API
                     Description = "Test services"
                 });
             });
+            // Genera los Cors
+            services.AddCors(c =>
+            {
+                c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+            });
+
+            // CONFIGURACION DEL JWSTOKEN
+            //services.AddJWTAuthentication(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-
 
             if (env.IsDevelopment())
             {
@@ -97,7 +101,6 @@ namespace PS.Template.API
             {
                 endpoints.MapControllers();
             });
-
         }
     }
 }

@@ -6,19 +6,34 @@ namespace PS.Template.Application.Services
 {
     public class Conversion
     {
-        public static Usuario converDTO(RequestPost entity)
+        public static Usuario ConverUser(RequestPost entity)
         {
-            //IEnumerable<Autenticacion> result = GetDataApi(2);
-            var usuario = new Usuario
+            Usuario user = new Usuario()
             {
-                Nombre = entity.Usuario.Nombre,
-                Apellido = entity.Usuario.Apellido,
-                Dni = entity.Usuario.Dni,
-                FechaNac = entity.Usuario.FechaNac,
-                //IdDireccion = entity.Direccion.
-                //IdCuenta = entity.IdCuenta,
+                Nombre = entity.Nombre,
+                Apellido = entity.Apellido,
+                Dni = entity.Dni,
+                FechaNac = entity.FechaNac,
+                IdDireccion = 0,
+                IdCuenta = 0
             };
-            return usuario;
+
+            return user;
         }
+
+        public static CuentaDTO ConverAccount(RequestPost entity)
+        {
+            CuentaDTO account = new CuentaDTO()
+            {
+                Contraseña = entity.Cuenta.Password,
+                Mail = entity.Cuenta.Email,
+                IdTipoCuenta = 1,
+                IdUsuario = 0
+            };
+
+            return account;
+        }
+
+
     }
 }

@@ -9,6 +9,7 @@ using RestSharp;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 
 namespace PS.Template.Application.Services
 {
@@ -20,7 +21,7 @@ namespace PS.Template.Application.Services
         private readonly IUsuarioQuery _query;
         private readonly IGenerateRequest _request;
 
-        public UsuarioServices(IUsuarioRepository repository,IUsuarioQuery query, IGenerateRequest request) : base(repository)
+        public UsuarioServices(IUsuarioRepository repository, IUsuarioQuery query, IGenerateRequest request) : base(repository)
         {
             _repository = repository;
             _query = query;
@@ -32,9 +33,9 @@ namespace PS.Template.Application.Services
             return _query.EliminarUsuario(id);
         }
 
-        public List<ResponseGetAllUsuarios> GetUsuarios(int id,string dni)
+        public List<ResponseGetAllUsuarios> GetUsuarios(int id, string dni)
         {
-            return _query.GetAllUsuarios(id,dni);
+            return _query.GetAllUsuarios(id, dni);
         }
 
         public Usuario UpDateUsuario(int id, RequestPost user)
@@ -44,41 +45,35 @@ namespace PS.Template.Application.Services
 
         public Usuario CreateUserAccount(RequestPost requestPost)
         {
-            string idCuenta = "";
-            string idDirecion = "";
-            CuentaDTO account = new CuentaDTO()
+            Usuario user = null;
+            ResultPost StateDireccion = PostDireccionApi(requestPost.Direccion).First();
+            if (StateDireccion.Id != null || StateDireccion.Id != "null")
             {
-                Contraseña = requestPost.Password,
-                Mail = requestPost.Email,
-                IdTipoCuenta = 1,
-                IdUsuario = 0
-            };
+                user = Conversion.ConverUser(requestPost);
 
-            IEnumerable<ResultPost> StateDireccion = PostDireccionApi(requestPost.Direccion);
-            foreach (var item in StateDireccion)
-            {
-                if (item.Type == "Direccion")
-                    idDirecion = item.Id;
+                user.IdDireccion = int.Parse(StateDireccion.Id);
+
+                _repository.Add(user);
+
+                if (user != null)
+                {
+                    CuentaDTO account = Conversion.ConverAccount(requestPost);
+
+                    ResultPost StateCuenta = PostCuentaApi(account).First();
+
+                    if (StateCuenta.Id != null || StateCuenta.Id != "null")
+                    {
+                        user.IdCuenta = int.Parse(StateCuenta.Id);
+                        _repository.Edit(user);
+                    }
+                    else
+                    {
+                        _repository.Delete(user);
+                        user = null;
+                    }
+                }
             }
 
-            IEnumerable<ResultPost> StateCuenta = PostCuentaApi(account);
-
-            foreach (var item in StateCuenta)
-            {
-                if (item.Type == "Cuenta")
-                    idCuenta = item.Id;
-            }
-
-            Usuario user = new Usuario()
-            {
-                Nombre=requestPost.Usuario.Nombre,
-                Apellido=requestPost.Usuario.Apellido,
-                Dni=requestPost.Usuario.Dni,
-                FechaNac=requestPost.Usuario.FechaNac,
-                IdDireccion= int.Parse(idDirecion),
-                IdCuenta= int.Parse(idCuenta)
-            };
-            _repository.Add(user);
             return user;
         }
 
