@@ -51,7 +51,7 @@ namespace PS.Template.AccessData.Query
                             Dni = dni,
                             FechaNac = fec,
                         });
-            return Conversion.converDTO(user);
+            return Conversion.ConverUser(user);
         }
 
         public int EliminarUsuario(int id)

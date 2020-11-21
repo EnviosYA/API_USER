@@ -21,7 +21,6 @@ namespace PS.Template.API.Controllers
         [HttpPost]
         public ActionResult<Usuario> Post(RequestPost usuario)
         {
-
             try
             {
                 var user = _services.CreateUserAccount(usuario);
