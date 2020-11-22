@@ -46,7 +46,9 @@ namespace PS.Template.Application.Services
         public Usuario CreateUserAccount(RequestPost requestPost)
         {
             Usuario user = null;
+
             ResultPost StateDireccion = PostDireccionApi(requestPost.Direccion).First();
+
             if (StateDireccion.Id != null || StateDireccion.Id != "null")
             {
                 user = Conversion.ConverUser(requestPost);
@@ -57,7 +59,7 @@ namespace PS.Template.Application.Services
 
                 if (user != null)
                 {
-                    CuentaDTO account = Conversion.ConverAccount(requestPost);
+                    CuentaDTO account = Conversion.ConverAccount(requestPost, user.IdUsuario);
 
                     ResultPost StateCuenta = PostCuentaApi(account).First();
 

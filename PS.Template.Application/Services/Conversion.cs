@@ -21,14 +21,14 @@ namespace PS.Template.Application.Services
             return user;
         }
 
-        public static CuentaDTO ConverAccount(RequestPost entity)
+        public static CuentaDTO ConverAccount(RequestPost entity, int iduser)
         {
             CuentaDTO account = new CuentaDTO()
             {
                 Contraseña = entity.Cuenta.Password,
                 Mail = entity.Cuenta.Email,
                 IdTipoCuenta = 1,
-                IdUsuario = 0
+                IdUsuario = iduser
             };
 
             return account;
