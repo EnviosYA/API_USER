@@ -26,16 +26,16 @@ namespace PS.Template.API.Controllers
                 var user = _services.CreateUserAccount(usuario);
                 if (user != null)
                 {
-                    return new JsonResult(new ResponseGetGenery { id = user.IdUsuario, Tipo = "Usuario Creado" }) { StatusCode = 201 };
+                    return new JsonResult(new ResponseGetGenery { id = user.IdUsuario, Tipo = "Usuario Creado", Status = true }) { StatusCode = 201 };
                 }
                 else
                 {
                     return new JsonResult(new ResponseGetGenery { id = 0 , Tipo = null}) { StatusCode = 400};
                 }
             }
-            catch (Exception e)
+            catch 
             {
-                return BadRequest(e.Message);
+                return new JsonResult(new ResponseGetGenery { id = 0, Tipo = null }) { StatusCode = 500 };
             }
         }
 
@@ -59,7 +59,7 @@ namespace PS.Template.API.Controllers
             {
                 var user = _services.UpDateUsuario(id, usuario);
 
-                return new JsonResult(new ResponseGetGenery { id = user.IdUsuario, Tipo = "Usuario Modificado" }) { StatusCode = 204 };
+                return new JsonResult(new ResponseGetGenery { id = user.IdUsuario, Tipo = "Usuario Modificado", Status = true }) { StatusCode = 204 };
             }
             catch (Exception e)
             {
@@ -74,7 +74,7 @@ namespace PS.Template.API.Controllers
             {
                 var idAfec = _services.DeletearUsuario(id);
 
-                return new JsonResult(new ResponseGetGenery { id = idAfec, Tipo = "Usuario Borrado" }) { StatusCode = 200 };
+                return new JsonResult(new ResponseGetGenery { id = idAfec, Tipo = "Usuario Borrado", Status = true }) { StatusCode = 200 };
             }
             catch (Exception e)
             {
